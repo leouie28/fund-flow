@@ -1,4 +1,4 @@
-import { Heading, View } from '@gluestack-ui/themed';
+import { View } from '@gluestack-ui/themed';
 import { ScrollView } from '@gluestack-ui/themed';
 import { SafeAreaView } from 'react-native';
 import { StyleSheet } from 'react-native';
@@ -6,11 +6,13 @@ import Card from '../../components/Fund/Card';
 
 export default function TabOneScreen() {
     return (
-        <View style={{flex: 1}}>
+        <View style={{flex: 1, backgroundColor: 'white'}}>
             <SafeAreaView style={{flex: 1}}>
-                <View style={{flex: 1, paddingTop: 50, padding: 18}}>
+                <View style={{flex: 1, paddingTop: 50, paddingHorizontal: 18}}>
                     <ScrollView>
-                        <Card data="" />
+                        {Array.of('Personal','Business','Company Outing','Francise Fund').map((item,i) => (
+                            <Card key={i} data={item} />
+                        ))}
                     </ScrollView>
                 </View>
             </SafeAreaView>
