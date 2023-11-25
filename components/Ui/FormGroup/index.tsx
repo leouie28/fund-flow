@@ -10,8 +10,9 @@ import {
     AlertCircleIcon,
     FormControlError,
     FormControlErrorText,
-    FormControlErrorIcon
-} from "@gluestack-ui/themed";
+    FormControlErrorIcon,
+    InputIcon,
+} from '@gluestack-ui/themed';
 
 export default function FormGroup() {
     return (
@@ -24,23 +25,23 @@ export default function FormGroup() {
                 isRequired={false}
             >
                 <FormControlLabel mb="$1">
-                <FormControlLabelText>Password</FormControlLabelText>
+                    <FormControlLabelText>Label</FormControlLabelText>
                 </FormControlLabel>
-                <Input>
-                <InputField type="number" defaultValue="12345" placeholder="password" />
+                <Input rounded='$xl' size='xl'>
+                    <InputField placeholder="Type here" />
                 </Input>
                 <FormControlHelper>
-                <FormControlHelperText>
-                    Must be at least 6 characters.
-                </FormControlHelperText>
+                    <FormControlHelperText>
+                        Must be at least 6 characters.
+                    </FormControlHelperText>
                 </FormControlHelper>
                 <FormControlError>
-                <FormControlErrorIcon as={AlertCircleIcon} />
-                <FormControlErrorText>
-                    At least 6 characters are required.
-                </FormControlErrorText>
+                    <FormControlErrorIcon as={AlertCircleIcon} />
+                    <FormControlErrorText>
+                        At least 6 characters are required.
+                    </FormControlErrorText>
                 </FormControlError>
             </FormControl>
         </Box>
-    )
+    );
 }
