@@ -1,17 +1,6 @@
+import React from 'react';
 import {
     Box,
-    FormControl,
-    FormControlLabel,
-    FormControlLabelText,
-    Input,
-    InputField,
-    FormControlHelper,
-    FormControlHelperText,
-    AlertCircleIcon,
-    FormControlError,
-    FormControlErrorText,
-    FormControlErrorIcon,
-    InputIcon,
     Select,
     SelectTrigger,
     SelectInput,
@@ -27,16 +16,17 @@ import {
 } from '@gluestack-ui/themed';
 
 export default function FormGroupSelect() {
+
     return (
-        <Box>
-            <Select zIndex={999}>
+        <Box zIndex={999999}>
+            <Select zIndex={9999999}>
                 <SelectTrigger variant="outline" size="md">
                     <SelectInput placeholder="Select option" />
                     <SelectIcon mr="$3">
                         <Icon as={ChevronDownIcon} />
                     </SelectIcon>
                 </SelectTrigger>
-                <SelectPortal zIndex={999}>
+                <SelectPortal zIndex={9999999}>
                     <SelectBackdrop />
                     <SelectContent zIndex={999}>
                         <SelectDragIndicatorWrapper>

@@ -14,7 +14,8 @@ export {
     ErrorBoundary,
 } from 'expo-router';
 
-import { GluestackUIProvider } from "@gluestack-ui/themed"
+import { GluestackUIProvider,  } from "@gluestack-ui/themed"
+import { OverlayProvider } from "@gluestack-ui/overlay"
 import { config } from "@gluestack-ui/config" // Optional if you want to use default theme
 export const unstable_settings = {
     // Ensure that reloading on `/modal` keeps a back button present.
@@ -65,21 +66,23 @@ function RootLayoutNav() {
         // </ThemeProvider>
         
         <GluestackUIProvider config={config}>
-            <Stack>
-                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                <Stack.Screen
-                    name="fund/create"
-                    options={{ headerShown: false, presentation: 'modal'  }}
-                />
-                <Stack.Screen
-                    name="transaction/create"
-                    options={{ headerShown: false, presentation: 'modal' }}
-                />
-                <Stack.Screen
-                    name="modal"
-                    options={{ headerShown: false, presentation: 'modal' }}
-                />
-            </Stack>
+            <OverlayProvider>
+                <Stack>
+                    <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                    <Stack.Screen
+                        name="fund/create"
+                        options={{ headerShown: false, presentation: 'modal' }}
+                    />
+                    <Stack.Screen
+                        name="transaction/create"
+                        options={{ headerShown: false, presentation: 'modal' }}
+                    />
+                    <Stack.Screen
+                        name="modal"
+                        options={{ headerShown: false, presentation: 'modal' }}
+                    />
+                </Stack>
+            </OverlayProvider>
         </GluestackUIProvider>
     );
 }
