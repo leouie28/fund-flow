@@ -1,15 +1,17 @@
 import moment from 'moment'
 import useSqlite from "./useSqlite"
+import { FundProps } from './useTypes'
 
 export default () => {
     const db = useSqlite().openDatabase()
 
-    const create = async (name:string) => {
+    const create = async (data: FundProps) => {
         const now = moment().format()
         return new Promise((resolve, reject) => {
             db.transaction((tx) => {
                 tx.executeSql(
-                    'INSERT INTO funds (name, created_at, updated_at) VALUES (?, ?, ?);', [name, now, now], (tx, result) => {
+                    'INSERT INTO funds (name, currency, description, created_at, updated_at) VALUES (?, ?, ?, ? ?);', 
+                    [data.name, data.currency, data.description as string, now, now], (tx, result) => {
                         resolve({status: 'success', message: 'Fund successfully created!', data: result})
                     }, (_, error): boolean | any => {
                         reject(error)

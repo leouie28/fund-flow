@@ -57,7 +57,7 @@ export default function TabLayout() {
                 <Tabs.Screen
                     name="index"
                     options={{
-                        title: 'Home',
+                        title: 'Funds',
                         headerTitle: 'Fundflow',
                         headerTransparent: true,
                         tabBarIcon: ({ color }) => <Wallet color={color} />,

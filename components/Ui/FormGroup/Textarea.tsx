@@ -3,8 +3,8 @@ import {
     FormControl,
     FormControlLabel,
     FormControlLabelText,
-    Input,
-    InputField,
+    Textarea,
+    TextareaInput,
     FormControlHelper,
     FormControlHelperText,
     AlertCircleIcon,
@@ -12,16 +12,18 @@ import {
     FormControlErrorText,
     FormControlErrorIcon,
     InputIcon,
+    Text,
 } from '@gluestack-ui/themed';
 
 type Props = {
     label: string,
     placeholder?: string,
     error?: string,
-    description?: string
+    description?: string,
+    optional?: boolean
 }
 
-export default function FormGroup({label, placeholder, error, description}: Props) {
+export default function FormGroupTextarea({label, placeholder, error, description, optional}: Props) {
     return (
         <Box marginVertical={4}>
             <FormControl
@@ -33,10 +35,20 @@ export default function FormGroup({label, placeholder, error, description}: Prop
             >
                 <FormControlLabel mb="$1">
                     <FormControlLabelText>{label}</FormControlLabelText>
+                    {optional && (<Text size='xs'> Optional</Text>)}
                 </FormControlLabel>
-                <Input rounded='$xl' size='xl'>
-                    <InputField placeholder={placeholder || "Type here"} />
-                </Input>
+                
+                <Textarea
+                    size="xl"
+                    rounded='$xl'
+                    isReadOnly={false}
+                    isInvalid={error ? true : false}
+                    isDisabled={false}
+                    w='$full'
+                >
+                    <TextareaInput placeholder={placeholder||'Type text here'} />
+                </Textarea>
+
                 {error ? (
                     <FormControlError>
                         <FormControlErrorIcon as={AlertCircleIcon} />
