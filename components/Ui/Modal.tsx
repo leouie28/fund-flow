@@ -4,14 +4,14 @@ import {
     ModalBackdrop,
     ModalContent,
     ModalHeader,
-    Heading,
+    ModalBody,
+    ModalFooter,
     ModalCloseButton,
+    Heading,
     View,
     Icon,
     CloseIcon,
-    ModalBody,
     Text,
-    ModalFooter,
     Button,
     ButtonText
 } from '@gluestack-ui/themed';

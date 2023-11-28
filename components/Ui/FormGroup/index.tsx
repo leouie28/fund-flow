@@ -16,7 +16,7 @@ import {
 
 export default function FormGroup() {
     return (
-        <Box>
+        <Box marginVertical={4}>
             <FormControl
                 size="md"
                 isDisabled={false}

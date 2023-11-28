@@ -8,6 +8,7 @@ import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
 import { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
+import { MenuProvider } from 'react-native-popup-menu';
 
 export {
     // Catch any errors thrown by the Layout component.
@@ -15,7 +16,6 @@ export {
 } from 'expo-router';
 
 import { GluestackUIProvider,  } from "@gluestack-ui/themed"
-import { OverlayProvider } from "@gluestack-ui/overlay"
 import { config } from "@gluestack-ui/config" // Optional if you want to use default theme
 export const unstable_settings = {
     // Ensure that reloading on `/modal` keeps a back button present.
@@ -66,7 +66,7 @@ function RootLayoutNav() {
         // </ThemeProvider>
         
         <GluestackUIProvider config={config}>
-            <OverlayProvider>
+            <MenuProvider>
                 <Stack>
                     <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
                     <Stack.Screen
@@ -82,7 +82,7 @@ function RootLayoutNav() {
                         options={{ headerShown: false, presentation: 'modal' }}
                     />
                 </Stack>
-            </OverlayProvider>
+            </MenuProvider>
         </GluestackUIProvider>
     );
 }

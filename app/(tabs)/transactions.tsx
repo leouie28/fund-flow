@@ -10,7 +10,6 @@ import {
 import { SafeAreaView } from 'react-native';
 import { StyleSheet } from 'react-native';
 import ListItem from '../../components/Transaction/ListItem';
-import FormGroupSelect from '../../components/Ui/FormGroup/Select';
 
 export default function Tranactions() {
     return (
@@ -35,7 +34,6 @@ export default function Tranactions() {
                             <ListItem key={i} data={item} />
                         ))}
                     </ScrollView>
-                    <FormGroupSelect />
                 </View>
             </SafeAreaView>
         </View>
