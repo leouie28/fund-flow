@@ -16,7 +16,7 @@
     "@expo/vector-icons": "^13.0.0",
     "@gluestack-style/react": "^1.0.17",
     "@gluestack-ui/config": "^1.0.3",
-    "@gluestack-ui/themed": "^1.0.17",
+    "@gluestack-ui/themed": "^1.0.18",
     "@react-navigation/native": "^6.0.2",
     "expo": "~49.0.15",
     "expo-asset": "^8.10.1",

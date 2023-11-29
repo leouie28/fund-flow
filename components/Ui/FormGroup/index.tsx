@@ -1,5 +1,6 @@
 import {
     Box,
+    Text,
     FormControl,
     FormControlLabel,
     FormControlLabelText,
@@ -11,17 +12,32 @@ import {
     FormControlError,
     FormControlErrorText,
     FormControlErrorIcon,
-    InputIcon,
+    InputSlot,
 } from '@gluestack-ui/themed';
+import React from 'react';
+import { KeyboardTypeOptions } from 'react-native';
 
 type Props = {
-    label: string,
-    placeholder?: string,
-    error?: string,
-    description?: string
-}
+    label: string;
+    placeholder?: string;
+    error?: string | boolean;
+    description?: string;
+    value?: string;
+    onChange?: (e: string) => void;
+    keyboardType?: KeyboardTypeOptions;
+    appendContent?: React.ReactNode;
+};
 
-export default function FormGroup({label, placeholder, error, description}: Props) {
+export default function FormGroup({
+    label,
+    placeholder,
+    error,
+    description,
+    value,
+    onChange,
+    keyboardType,
+    appendContent,
+}: Props) {
     return (
         <Box marginVertical={4}>
             <FormControl
@@ -34,25 +50,29 @@ export default function FormGroup({label, placeholder, error, description}: Prop
                 <FormControlLabel mb="$1">
                     <FormControlLabelText>{label}</FormControlLabelText>
                 </FormControlLabel>
-                <Input rounded='$xl' size='xl'>
-                    <InputField placeholder={placeholder || "Type here"} />
+                <Input rounded="$xl" size="xl">
+                    {appendContent && <InputSlot>{appendContent}</InputSlot>}
+                    <InputField
+                        placeholder={placeholder || 'Type here'}
+                        keyboardType={keyboardType}
+                        value={value}
+                        onChangeText={(e) => onChange && onChange(e)}
+                    />
                 </Input>
                 {error ? (
                     <FormControlError>
                         <FormControlErrorIcon as={AlertCircleIcon} />
-                        <FormControlErrorText>
-                            {error}
-                        </FormControlErrorText>
+                        <FormControlErrorText>{error}</FormControlErrorText>
                     </FormControlError>
-                ) : 
-                     description && (
+                ) : (
+                    description && (
                         <FormControlHelper>
                             <FormControlHelperText>
                                 {description}
                             </FormControlHelperText>
                         </FormControlHelper>
                     )
-                }
+                )}
             </FormControl>
         </Box>
     );

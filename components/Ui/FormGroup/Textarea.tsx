@@ -11,19 +11,28 @@ import {
     FormControlError,
     FormControlErrorText,
     FormControlErrorIcon,
-    InputIcon,
     Text,
 } from '@gluestack-ui/themed';
 
 type Props = {
-    label: string,
-    placeholder?: string,
-    error?: string,
-    description?: string,
-    optional?: boolean
-}
+    label: string;
+    placeholder?: string;
+    error?: string;
+    description?: string;
+    optional?: boolean;
+    value?: string;
+    onChange?: (e: string) => void;
+};
 
-export default function FormGroupTextarea({label, placeholder, error, description, optional}: Props) {
+export default function FormGroupTextarea({
+    label,
+    placeholder,
+    error,
+    description,
+    optional,
+    value,
+    onChange,
+}: Props) {
     return (
         <Box marginVertical={4}>
             <FormControl
@@ -35,36 +44,31 @@ export default function FormGroupTextarea({label, placeholder, error, descriptio
             >
                 <FormControlLabel mb="$1">
                     <FormControlLabelText>{label}</FormControlLabelText>
-                    {optional && (<Text size='xs'> Optional</Text>)}
+                    {optional && <Text size="xs"> Optional</Text>}
                 </FormControlLabel>
-                
-                <Textarea
-                    size="xl"
-                    rounded='$xl'
-                    isReadOnly={false}
-                    isInvalid={error ? true : false}
-                    isDisabled={false}
-                    w='$full'
-                >
-                    <TextareaInput placeholder={placeholder||'Type text here'} />
+
+                <Textarea size="xl" rounded="$xl" w="$full">
+                    <TextareaInput
+                        value={value}
+                        onChangeText={(e) => onChange && onChange(e)}
+                        placeholder={placeholder || 'Type text here'}
+                    />
                 </Textarea>
 
                 {error ? (
                     <FormControlError>
                         <FormControlErrorIcon as={AlertCircleIcon} />
-                        <FormControlErrorText>
-                            {error}
-                        </FormControlErrorText>
+                        <FormControlErrorText>{error}</FormControlErrorText>
                     </FormControlError>
-                ) : 
-                     description && (
+                ) : (
+                    description && (
                         <FormControlHelper>
                             <FormControlHelperText>
                                 {description}
                             </FormControlHelperText>
                         </FormControlHelper>
                     )
-                }
+                )}
             </FormControl>
         </Box>
     );

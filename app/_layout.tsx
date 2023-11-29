@@ -15,21 +15,28 @@ export {
     ErrorBoundary,
 } from 'expo-router';
 
-import { GluestackUIProvider,  } from "@gluestack-ui/themed"
-import { config } from "@gluestack-ui/config" // Optional if you want to use default theme
+import { GluestackUIProvider } from '@gluestack-ui/themed';
+import { config } from '@gluestack-ui/config'; // Optional if you want to use default theme
 export const unstable_settings = {
     // Ensure that reloading on `/modal` keeps a back button present.
     initialRouteName: '(tabs)',
 };
 
+import useSqlite from '../utils/useSqlite';
+
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
+    const { init } = useSqlite();
     const [loaded, error] = useFonts({
         SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
         ...FontAwesome.font,
     });
+
+    useEffect(() => {
+        init();
+    }, []);
 
     // Expo Router uses Error Boundaries to catch errors in the navigation tree.
     useEffect(() => {
@@ -64,11 +71,14 @@ function RootLayoutNav() {
         //         />
         //     </Stack>
         // </ThemeProvider>
-        
+
         <GluestackUIProvider config={config}>
             <MenuProvider>
                 <Stack>
-                    <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                    <Stack.Screen
+                        name="(tabs)"
+                        options={{ headerShown: false }}
+                    />
                     <Stack.Screen
                         name="fund/create"
                         options={{ headerShown: false, presentation: 'modal' }}
