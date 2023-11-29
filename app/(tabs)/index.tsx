@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from '@gluestack-ui/themed';
+import { Center, Text, View } from '@gluestack-ui/themed';
 import { ScrollView } from '@gluestack-ui/themed';
 import { SafeAreaView } from 'react-native';
 import { StyleSheet } from 'react-native';
@@ -28,9 +28,13 @@ export default function TabOneScreen() {
                     style={{ flex: 1, paddingTop: 50, paddingHorizontal: 18 }}
                 >
                     <ScrollView>
-                        {funds.map((item, i) => (
+                        {funds.length ? funds.map((item, i) => (
                             <Card key={i} data={item} />
-                        ))}
+                        )) : (
+                            <Center>
+                                <Text>No Fund found</Text>
+                            </Center>
+                        )}
                     </ScrollView>
                 </View>
             </SafeAreaView>

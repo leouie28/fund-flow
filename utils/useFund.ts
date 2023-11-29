@@ -90,10 +90,28 @@ export default () => {
         });
     };
 
+    const getUnique = (id: string | number) => {
+        return new Promise((resolve, reject) => {
+            db.transaction((tx) => {
+                tx.executeSql(
+                    'SELECT * FROM funds WHERE id = ?;',
+                    [id],
+                    (_, { rows: { _array } }) => {
+                        resolve(_array.length ? _array[0] : null);
+                    },
+                    (_, error): boolean | any => {
+                        reject(error);
+                    }
+                );
+            });
+        });
+    }
+
     return {
         create,
         remove,
         update,
         getMany,
+        getUnique
     };
 };

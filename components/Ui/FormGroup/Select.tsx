@@ -23,7 +23,6 @@ import {
     FormControlErrorText,
     FormControlErrorIcon,
     Text,
-    onChange,
 } from '@gluestack-ui/themed';
 import { Plus } from 'lucide-react-native';
 import { TouchableOpacity } from 'react-native';
@@ -40,6 +39,8 @@ type Props = {
     options: OptionTyps[] | [];
     value?: string;
     onChange?: (e: string) => void;
+    error?: string | boolean;
+    description?: string;
 };
 
 export default function FormGroupSelect({
@@ -47,6 +48,8 @@ export default function FormGroupSelect({
     placeholder,
     options,
     value,
+    error,
+    description,
     onChange,
 }: Props) {
     const SelectField = () => {
@@ -126,7 +129,7 @@ export default function FormGroupSelect({
             <FormControl
                 size="md"
                 isDisabled={false}
-                isInvalid={false}
+                isInvalid={error ? true : false}
                 isReadOnly={false}
                 isRequired={false}
             >
@@ -137,18 +140,20 @@ export default function FormGroupSelect({
                 </FormControlLabel>
 
                 <SelectField />
-
-                <FormControlHelper>
-                    <FormControlHelperText>
-                        Must be at least 6 characters.
-                    </FormControlHelperText>
-                </FormControlHelper>
-                <FormControlError>
-                    <FormControlErrorIcon as={AlertCircleIcon} />
-                    <FormControlErrorText>
-                        At least 6 characters are required.
-                    </FormControlErrorText>
-                </FormControlError>
+                {error ? (
+                    <FormControlError>
+                        <FormControlErrorIcon as={AlertCircleIcon} />
+                        <FormControlErrorText>{error}</FormControlErrorText>
+                    </FormControlError>
+                ) : (
+                    description && (
+                        <FormControlHelper>
+                            <FormControlHelperText>
+                                {description}
+                            </FormControlHelperText>
+                        </FormControlHelper>
+                    )
+                )}
             </FormControl>
         </Box>
     );

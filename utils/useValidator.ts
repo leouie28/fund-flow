@@ -6,7 +6,7 @@ export default () => {
                 if (
                     payload[key] == '' ||
                     !payload[key] ||
-                    !payload[key].length
+                    payload[key].length < 0
                 ) {
                     empty.push(key);
                 }
@@ -18,7 +18,7 @@ export default () => {
                     if (
                         payload[key] == '' ||
                         !payload[key] ||
-                        !payload[key].length
+                        payload[key].length < 0
                     ) {
                         empty.push(key);
                     }

@@ -18,6 +18,7 @@ import { router } from 'expo-router';
 import Toaster from '../../components/Toast';
 import useValidator from '../../utils/useValidator';
 import useFund from '../../utils/useFund';
+import { TouchableWithoutFeedback, Keyboard } from 'react-native';
 
 export default function FundCreate() {
     const fund = useFund();
@@ -53,83 +54,85 @@ export default function FundCreate() {
                         );
                     },
                 });
-            }, 800);
+            }, 1000);
             router.back();
         }
     };
 
     return (
         <OverlayProvider>
-            <Box padding={12}>
-                <Center>
-                    <Box
+            <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+                <Box padding={12}>
+                    <Center>
+                        <Box
+                            rounded="$xl"
+                            padding={6}
+                            bg="$secondary200"
+                            w="$20"
+                        ></Box>
+                    </Center>
+                    <Center>
+                        <Heading>New Fund</Heading>
+                    </Center>
+                    <VStack>
+                        <FormGroup
+                            label="Fund Name"
+                            placeholder="Enter fund name"
+                            description="Ex. Personal Fund"
+                            value={name}
+                            onChange={(e) => setName(e)}
+                            error={
+                                empty.includes('name') && 'This field is required!'
+                            }
+                        />
+                        <FormGroup
+                            label="Currency Symbol"
+                            placeholder="Enter currency symbol"
+                            description="Ex. $ default is set to ₱"
+                            value={currency}
+                            onChange={(e) => setCurrency(e)}
+                        />
+                        <FormGroupTextarea
+                            label="Description"
+                            placeholder="Enter fund description"
+                            optional
+                            description="Describe your fund"
+                            value={description}
+                            onChange={(e) => setDescription(e)}
+                        />
+                    </VStack>
+                    <Button
+                        onPress={handleSubmit}
+                        disabled={loading}
+                        marginVertical={6}
+                        size="xl"
                         rounded="$xl"
-                        padding={6}
-                        bg="$secondary200"
-                        w="$20"
-                    ></Box>
-                </Center>
-                <Center>
-                    <Heading>New Fund</Heading>
-                </Center>
-                <VStack>
-                    <FormGroup
-                        label="Fund Name"
-                        placeholder="Enter fund name"
-                        description="Ex. Personal Fund"
-                        value={name}
-                        onChange={(e) => setName(e)}
-                        error={
-                            empty.includes('name') && 'This field is required!'
-                        }
-                    />
-                    <FormGroup
-                        label="Currency Symbol"
-                        placeholder="Enter currency symbol"
-                        description="Ex. $ default is set to ₱"
-                        value={currency}
-                        onChange={(e) => setCurrency(e)}
-                    />
-                    <FormGroupTextarea
-                        label="Description"
-                        placeholder="Enter fund description"
-                        optional
-                        description="Describe your fund"
-                        value={description}
-                        onChange={(e) => setDescription(e)}
-                    />
-                </VStack>
-                <Button
-                    onPress={handleSubmit}
-                    disabled={loading}
-                    marginVertical={6}
-                    size="xl"
-                    rounded="$xl"
-                >
-                    {loading ? (
-                        <>
-                            <ButtonSpinner mr="$1" />
-                            <ButtonText>Creating ...</ButtonText>
-                        </>
-                    ) : (
-                        <>
-                            <ButtonText>Create Fund </ButtonText>
-                            <ButtonIcon size="xl" as={AddIcon} />
-                        </>
-                    )}
-                </Button>
-                <Button
-                    onPress={() => router.back()}
-                    marginVertical={6}
-                    size="xl"
-                    variant="link"
-                    action="secondary"
-                    rounded="$xl"
-                    // borderWidth={0}
-                >
-                    <ButtonText>Cancel</ButtonText>
-                </Button>
-            </Box>
+                    >
+                        {loading ? (
+                            <>
+                                <ButtonSpinner mr="$1" />
+                                <ButtonText>Creating ...</ButtonText>
+                            </>
+                        ) : (
+                            <>
+                                <ButtonText>Create Fund </ButtonText>
+                                <ButtonIcon size="xl" as={AddIcon} />
+                            </>
+                        )}
+                    </Button>
+                    <Button
+                        onPress={() => router.back()}
+                        marginVertical={6}
+                        size="xl"
+                        variant="link"
+                        action="secondary"
+                        rounded="$xl"
+                        // borderWidth={0}
+                    >
+                        <ButtonText>Cancel</ButtonText>
+                    </Button>
+                </Box>
+            </TouchableWithoutFeedback>
         </OverlayProvider>
     );
 }
