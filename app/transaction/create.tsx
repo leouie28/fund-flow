@@ -26,8 +26,10 @@ import { FundProps } from '../../models/types/fund';
 import { Keyboard, TouchableWithoutFeedback } from 'react-native';
 import FormGroupRadio from '../../components/Ui/FormGroup/Radio';
 import { TranxProps } from '../../models/types/transaction';
+import { useRoute } from '@react-navigation/native';
 
 export default function TransactionCreate() {
+    const route = useRoute()
     const toast = useToast();
     const [loading, setLoading] = React.useState<boolean>(false);
     const [type, setType] = React.useState<'income' | 'expense'>('income');
@@ -57,6 +59,9 @@ export default function TransactionCreate() {
             const funds = await useFund().getMany()
             if(funds && Array.isArray(funds)) {
                 setFundsOpt(funds.map(item => ({label: item.name, value: item.id})));
+                if ((route.params as any)?.fund_id) {
+                    setFundId((route.params as any).fund_id)
+                } 
             }
         }
 

@@ -20,6 +20,7 @@ import Colors from '../../constants/Colors';
 import Line from '../Charts/Line';
 import MenuUi from '../Ui/Menu';
 import { formatNumber } from '../../utils/useNumber';
+import { router } from 'expo-router';
 
 type DataType = {
     id?: number | string;
@@ -80,7 +81,7 @@ export default function Card({ data }: PropsType) {
                 <View marginTop={10}>
                     <Progress
                         marginVertical={4}
-                        bg="#fb7185"
+                        bg={ getIncomePercent() >= 0 ? "#fb7185" : "#DADADA" }
                         value={getIncomePercent()}
                         w="$full"
                         size="sm"
@@ -118,13 +119,14 @@ export default function Card({ data }: PropsType) {
                 </View>
                 {/* <Divider marginTop="$4" /> */}
                 <Button
+                    onPress={() => router.push({pathname: "/transaction/create", params: {fund_id: data.id}})}
                     rounded="$2xl"
                     marginTop={6}
                     variant="link"
                     // action="secondary"
                 >
-                    <ButtonText>Add transaction</ButtonText>
-                    {/* <ButtonIcon as={AddIcon} /> */}
+                    <ButtonIcon as={AddIcon} />
+                    <ButtonText> Add transaction</ButtonText>
                 </Button>
             </Box>
         </TouchableOpacity>
@@ -133,7 +135,7 @@ export default function Card({ data }: PropsType) {
 
 const style = StyleSheet.create({
     container: {
-        padding: 18,
+        padding: 14,
         marginVertical: 8,
         backgroundColor: '#fff',
         position: 'relative',

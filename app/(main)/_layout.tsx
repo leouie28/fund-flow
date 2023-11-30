@@ -63,7 +63,7 @@ export default function TabLayout() {
         <>
             <Tabs
                 screenOptions={{
-                    tabBarStyle: { borderWidth: 0 },
+                    // tabBarStyle: { borderTopWidth: 0, borderColor: 'blue', elevation: 0 },
                     tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
                 }}
             >
@@ -91,7 +91,7 @@ export default function TabLayout() {
                                     size="xl"
                                     fontWeight="$medium"
                                 >
-                                    Hey, Mark
+                                    Hello, Mark
                                 </Text>
                             </Box>
                         ),
