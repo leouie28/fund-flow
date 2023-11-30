@@ -73,6 +73,38 @@ export default () => {
         });
     };
 
+    const getManyForDashboard = () => {
+        return new Promise((resolve, reject) => {
+            db.transaction((tx) => {
+                tx.executeSql(
+                    `SELECT
+                        funds.id AS id,
+                        funds.name AS name,
+                        funds.currency AS currency,
+                        funds.description AS description,
+                        funds.created_at AS created_at,
+                        funds.updated_at AS updated_at,
+                        SUM(CASE WHEN transactions.type = 'income' THEN transactions.amount ELSE 0 END) AS income_amount_sum,
+                        SUM(CASE WHEN transactions.type = 'expense' THEN transactions.amount ELSE 0 END) AS expense_amount_sum
+                    FROM 
+                        funds 
+                    LEFT JOIN 
+                        transactions ON funds.id = transactions.fund_id
+                    GROUP BY
+                        funds.id
+                    ORDER BY funds.id DESC;`,
+                    [],
+                    (_, { rows: { _array } }) => {
+                        resolve(_array);
+                    },
+                    (_, error): boolean | any => {
+                        reject(error);
+                    }
+                );
+            });
+        });
+    };
+
     const getMany = () => {
         return new Promise((resolve, reject) => {
             db.transaction((tx) => {
@@ -105,13 +137,14 @@ export default () => {
                 );
             });
         });
-    }
+    };
 
     return {
         create,
         remove,
         update,
         getMany,
-        getUnique
+        getManyForDashboard,
+        getUnique,
     };
 };

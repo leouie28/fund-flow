@@ -1,45 +1,113 @@
-import React from 'react'
+import React from 'react';
 import { Pressable, StyleSheet, TouchableOpacity } from 'react-native';
-import { 
+import {
     Box,
     Heading,
-    HStack, 
-    Text, 
+    HStack,
+    Text,
     View,
     Badge,
-    BadgeText
-} from '@gluestack-ui/themed'
-import { MoreHorizontal } from 'lucide-react-native';
+    BadgeText,
+    BadgeIcon,
+    Icon,
+} from '@gluestack-ui/themed';
+import {
+    MoreHorizontal,
+    Banknote,
+    CreditCard,
+    TrendingDown,
+    TrendingUp,
+} from 'lucide-react-native';
 import Colors from '../../constants/Colors';
 import Line from '../Charts/Line';
+import moment from 'moment';
+import { formatNumber } from '../../utils/useNumber';
+
+type DataType = {
+    id: string | number;
+    amount: string | number;
+    type: 'expense' | 'income';
+    form: 'cash' | 'credit';
+    date: string;
+    fund_name?: string;
+    fund_currency?: string;
+};
 
 interface PropsType {
-    data: any
+    data: DataType;
 }
 
-export default function ListItem({ data }:PropsType ) {
-    const [isOpen, setIsOpen] = React.useState<boolean>(false)
+export default function ListItem({ data }: PropsType) {
+    const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
     return (
         <Pressable>
             {({ pressed }) => (
-                <Box borderRadius='$lg' style={{ backgroundColor: pressed ? 'white' : 'transparent', ...style.container }}>
-                    <View style={{flex: 10, flexDirection: 'row'}}>
-                        <View flex={7}>
-                            <Text fontWeight='$semibold' size='lg'>Fund Name</Text>
-                            <Text size='sm'>Nov 25, 2023</Text>
+                <Box
+                    borderRadius="$lg"
+                    style={{
+                        backgroundColor: pressed ? '#F6F6F6' : 'transparent',
+                        opacity: pressed ? 0.5 : 1,
+                        ...style.container,
+                    }}
+                >
+                    <View
+                        style={{
+                            flex: 10,
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                        }}
+                    >
+                        <View flex={5}>
+                            <Text fontWeight="$semibold" size="lg">
+                                {data.fund_name}
+                            </Text>
+                            <Text size="sm">
+                                {moment(data.date).format('lll')}
+                            </Text>
                         </View>
-                        <View flex={3} alignItems='flex-end'>
-                            <Text fontWeight='$bold' size='lg'>₱{data}</Text>
-                            <Badge size="md" variant="solid" borderRadius="$lg"  action="success">
-                                <BadgeText>Expense</BadgeText>
+                        <View flex={5} alignItems="flex-end">
+                            <View flexDirection="row" alignItems="center">
+                                <Text
+                                    color={
+                                        data.type == 'income'
+                                            ? '#4AA9FF'
+                                            : '#fb7185'
+                                    }
+                                    size="md"
+                                    marginRight={2}
+                                >
+                                    {`${data.fund_currency} ${formatNumber(
+                                        data.amount
+                                    )}`}
+                                </Text>
+                                {data.type == 'income' ? (
+                                    <Icon as={TrendingUp} color="#4AA9FF" />
+                                ) : (
+                                    <Icon as={TrendingDown} color="#fb7185" />
+                                )}
+                            </View>
+                            <Badge
+                                size="md"
+                                variant="solid"
+                                borderRadius="$lg"
+                                action="muted"
+                            >
+                                <BadgeText>{data.form} </BadgeText>
+                                <BadgeIcon
+                                    as={
+                                        data.form == 'cash'
+                                            ? Banknote
+                                            : CreditCard
+                                    }
+                                />
                             </Badge>
                         </View>
                     </View>
                 </Box>
             )}
         </Pressable>
-    )
+    );
 }
 
 const style = StyleSheet.create({
@@ -62,5 +130,5 @@ const style = StyleSheet.create({
         alignItems: 'center',
         padding: 6,
         borderRadius: 10,
-    }
-})
+    },
+});

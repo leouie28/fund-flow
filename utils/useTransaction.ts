@@ -79,7 +79,21 @@ export default () => {
         return new Promise((resolve, reject) => {
             db.transaction((tx) => {
                 tx.executeSql(
-                    'SELECT * FROM funds ORDER BY id DESC;',
+                    `SELECT 
+                    transactions.id AS id,
+                    transactions.fund_id AS fund_id,
+                    transactions.amount AS amount,
+                    transactions.type AS type,
+                    transactions.note AS note,
+                    transactions.form AS form,
+                    transactions.date AS date,
+                    transactions.created_at AS created_at,
+                    transactions.updated_at AS updated_at,
+                    funds.name AS fund_name,
+                    funds.currency AS fund_currency
+                    FROM transactions 
+                    JOIN funds ON transactions.fund_id = funds.id
+                    ORDER BY transactions.created_at DESC;`,
                     [],
                     (_, { rows: { _array } }) => {
                         resolve(_array);
@@ -107,13 +121,13 @@ export default () => {
                 );
             });
         });
-    }
+    };
 
     return {
         create,
         remove,
         update,
         getMany,
-        getUnique
+        getUnique,
     };
 };

@@ -3,7 +3,16 @@ import { Link, Tabs } from 'expo-router';
 import { Pressable, StyleSheet, useColorScheme } from 'react-native';
 import { router } from 'expo-router';
 
-import { Wallet, ListTodo, AlignLeft, Plus, Filter, Banknote, X } from 'lucide-react-native';
+import {
+    Wallet,
+    ListTodo,
+    AlignLeft,
+    Plus,
+    Filter,
+    Banknote,
+    AlignRight,
+    X,
+} from 'lucide-react-native';
 
 import Colors from '../../constants/Colors';
 import React from 'react';
@@ -23,7 +32,11 @@ import {
     ButtonIcon,
     Center,
     Icon,
-    Heading
+    Heading,
+    AvatarGroup,
+    Avatar,
+    AvatarFallbackText,
+    AvatarImage,
 } from '@gluestack-ui/themed';
 
 /**
@@ -38,13 +51,13 @@ function TabBarIcon(props: {
 
 export default function TabLayout() {
     const colorScheme = useColorScheme();
-    const [showActionsheet, setShowActionsheet] = React.useState(false)
-    const handleClose = () => setShowActionsheet(!showActionsheet)
+    const [showActionsheet, setShowActionsheet] = React.useState(false);
+    const handleClose = () => setShowActionsheet(!showActionsheet);
 
     const navigateCreate = (route: '/fund/create' | '/transaction/create') => {
-        handleClose()
-        router.push(route)
-    }
+        handleClose();
+        router.push(route);
+    };
 
     return (
         <>
@@ -58,20 +71,42 @@ export default function TabLayout() {
                     name="index"
                     options={{
                         title: 'Funds',
-                        headerTitle: 'Fundflow',
+                        headerTitle: '',
                         headerTransparent: true,
                         tabBarIcon: ({ color }) => <Wallet color={color} />,
                         headerLeft: () => (
+                            <Box
+                                flexDirection="row"
+                                alignItems="center"
+                                marginLeft={15}
+                            >
+                                <Avatar>
+                                    <AvatarFallbackText>
+                                        Mark Leouie
+                                    </AvatarFallbackText>
+                                    {/* <AvatarImage /> */}
+                                </Avatar>
+                                <Text
+                                    marginLeft={10}
+                                    size="xl"
+                                    fontWeight="$medium"
+                                >
+                                    Hey, Mark
+                                </Text>
+                            </Box>
+                        ),
+                        headerRight: () => (
                             <Link href="/modal" asChild>
                                 <Pressable>
                                     {({ pressed }) => (
-                                        <AlignLeft
+                                        <AlignRight
                                             size={30}
                                             color={
-                                                Colors[colorScheme ?? 'light'].text
+                                                Colors[colorScheme ?? 'light']
+                                                    .text
                                             }
                                             style={{
-                                                marginLeft: 15,
+                                                marginRight: 15,
                                                 opacity: pressed ? 0.5 : 1,
                                             }}
                                         />
@@ -112,7 +147,7 @@ export default function TabLayout() {
                         tabPress: (e) => {
                             e.preventDefault();
                             // router.push('/modal');
-                            handleClose()
+                            handleClose();
                         },
                     }}
                 />
@@ -122,32 +157,15 @@ export default function TabLayout() {
                         title: 'Transactions',
                         headerTransparent: true,
                         tabBarIcon: ({ color }) => <Banknote color={color} />,
-                        headerLeft: () => (
-                            <Link href="/modal" asChild>
-                                <Pressable>
-                                    {({ pressed }) => (
-                                        <AlignLeft
-                                            size={30}
-                                            color={
-                                                Colors[colorScheme ?? 'light'].text
-                                            }
-                                            style={{
-                                                marginLeft: 15,
-                                                opacity: pressed ? 0.5 : 1,
-                                            }}
-                                        />
-                                    )}
-                                </Pressable>
-                            </Link>
-                        ),
                         headerRight: () => (
                             <Link href="/modal" asChild>
                                 <Pressable>
                                     {({ pressed }) => (
-                                        <Filter
-                                            size={25}
+                                        <AlignRight
+                                            size={30}
                                             color={
-                                                Colors[colorScheme ?? 'light'].text
+                                                Colors[colorScheme ?? 'light']
+                                                    .text
                                             }
                                             style={{
                                                 marginRight: 15,
@@ -158,26 +176,61 @@ export default function TabLayout() {
                                 </Pressable>
                             </Link>
                         ),
+                        // headerRight: () => (
+                        //     <Link href="/modal" asChild>
+                        //         <Pressable>
+                        //             {({ pressed }) => (
+                        //                 <Filter
+                        //                     size={25}
+                        //                     color={
+                        //                         Colors[colorScheme ?? 'light']
+                        //                             .text
+                        //                     }
+                        //                     style={{
+                        //                         marginRight: 15,
+                        //                         opacity: pressed ? 0.5 : 1,
+                        //                     }}
+                        //                 />
+                        //             )}
+                        //         </Pressable>
+                        //     </Link>
+                        // ),
                     }}
                 />
             </Tabs>
             <Box>
-                <Actionsheet isOpen={showActionsheet} onClose={handleClose} zIndex={999}>
+                <Actionsheet
+                    isOpen={showActionsheet}
+                    onClose={handleClose}
+                    zIndex={999}
+                >
                     <ActionsheetBackdrop />
-                    <ActionsheetContent backgroundColor='#f3f4f6' h='$64' zIndex={999}>
+                    <ActionsheetContent
+                        backgroundColor="#f3f4f6"
+                        h="$64"
+                        zIndex={999}
+                    >
                         <ActionsheetDragIndicatorWrapper>
                             <ActionsheetDragIndicator />
                         </ActionsheetDragIndicatorWrapper>
                         <Center marginTop={10}>
                             <Heading>Create New</Heading>
                         </Center>
-                        <ActionsheetItem onPress={() => navigateCreate('/transaction/create')}>
+                        <ActionsheetItem
+                            onPress={() =>
+                                navigateCreate('/transaction/create')
+                            }
+                        >
                             <ActionsheetIcon>
                                 <Icon as={Banknote} />
                             </ActionsheetIcon>
-                            <ActionsheetItemText>Transaction</ActionsheetItemText>
+                            <ActionsheetItemText>
+                                Transaction
+                            </ActionsheetItemText>
                         </ActionsheetItem>
-                        <ActionsheetItem onPress={() => navigateCreate('/fund/create')}>
+                        <ActionsheetItem
+                            onPress={() => navigateCreate('/fund/create')}
+                        >
                             <ActionsheetIcon>
                                 <Icon as={Wallet} />
                             </ActionsheetIcon>

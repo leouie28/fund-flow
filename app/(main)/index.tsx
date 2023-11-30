@@ -9,7 +9,7 @@ import useFund from '../../utils/useFund';
 
 export default function TabOneScreen() {
     const isFocus = useIsFocused();
-    const { getMany } = useFund();
+    const { getMany, getManyForDashboard } = useFund();
     const [funds, setFunds] = React.useState<any[]>([]);
 
     React.useEffect(() => {
@@ -17,20 +17,18 @@ export default function TabOneScreen() {
     }, [isFocus]);
 
     const fetchFund = async () => {
-        const data = await getMany();
+        const data = await getManyForDashboard();
         if (Array.isArray(data)) setFunds(data);
     };
 
     return (
-        <View style={{ flex: 1, backgroundColor: 'white' }}>
+        <View bg="$secondary50" style={{ flex: 1 }}>
             <SafeAreaView style={{ flex: 1 }}>
-                <View
-                    style={{ flex: 1, paddingTop: 50, paddingHorizontal: 18 }}
-                >
-                    <ScrollView>
-                        {funds.length ? funds.map((item, i) => (
-                            <Card key={i} data={item} />
-                        )) : (
+                <View style={{ flex: 1, paddingTop: 60 }}>
+                    <ScrollView paddingHorizontal={18}>
+                        {funds.length ? (
+                            funds.map((item, i) => <Card key={i} data={item} />)
+                        ) : (
                             <Center>
                                 <Text>No Fund found</Text>
                             </Center>

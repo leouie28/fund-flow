@@ -76,7 +76,7 @@ function RootLayoutNav() {
             <MenuProvider>
                 <Stack>
                     <Stack.Screen
-                        name="(tabs)"
+                        name="(main)"
                         options={{ headerShown: false }}
                     />
                     <Stack.Screen
@@ -89,7 +89,12 @@ function RootLayoutNav() {
                     />
                     <Stack.Screen
                         name="modal"
-                        options={{ headerShown: false, presentation: 'modal' }}
+                        options={{
+                            title: 'Fundflow',
+                            headerShown: true,
+                            // presentation: 'modal',
+                            animation: 'slide_from_left',
+                        }}
                     />
                 </Stack>
             </MenuProvider>
