@@ -84,7 +84,6 @@ export default function TabLayout() {
                                     <AvatarFallbackText>
                                         Mark Leouie
                                     </AvatarFallbackText>
-                                    {/* <AvatarImage /> */}
                                 </Avatar>
                                 <Text
                                     marginLeft={10}

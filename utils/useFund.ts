@@ -53,12 +53,19 @@ export default () => {
         });
     };
 
-    const update = async (id: number | string, name: string) => {
+    const update = async (id: number | string, data: FundProps) => {
         return new Promise((resolve, reject) => {
+            const now = moment().format();
             db.transaction((tx) => {
                 tx.executeSql(
-                    'UPDATE funds SET name = ? WHERE id = ?',
-                    [name, id],
+                    'UPDATE funds SET name = ?, currency = ?, description = ?, updated_at = ? WHERE id = ?',
+                    [
+                        data.name,
+                        data.currency,
+                        data.description as string,
+                        now,
+                        id,
+                    ],
                     () => {
                         resolve({
                             status: 'success',

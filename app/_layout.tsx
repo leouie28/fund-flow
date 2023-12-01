@@ -84,6 +84,10 @@ function RootLayoutNav() {
                         options={{ headerShown: false, presentation: 'modal' }}
                     />
                     <Stack.Screen
+                        name="fund/edit"
+                        options={{ headerShown: false, presentation: 'modal' }}
+                    />
+                    <Stack.Screen
                         name="transaction/create"
                         options={{ headerShown: false, presentation: 'modal' }}
                     />

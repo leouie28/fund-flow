@@ -24,7 +24,7 @@ export default function TabOneScreen() {
     return (
         <View bg="$secondary50" style={{ flex: 1 }}>
             <SafeAreaView style={{ flex: 1 }}>
-                <View style={{ flex: 1, paddingTop: 60 }}>
+                <View style={{ flex: 1, paddingTop: 58 }}>
                     <ScrollView paddingHorizontal={18}>
                         {funds.length ? (
                             funds.map((item, i) => <Card key={i} data={item} />)

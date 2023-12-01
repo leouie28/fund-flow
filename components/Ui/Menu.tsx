@@ -20,58 +20,63 @@ export default function MenuUi({
     return (
         <Box>
             <Menu>
-                <MenuTrigger style={{paddingHorizontal: 8, paddingVertical: 4 }} children={children} />
-                <MenuOptions 
+                <MenuTrigger
+                    style={{ paddingHorizontal: 8, paddingVertical: 4 }}
+                    children={children}
+                />
+                <MenuOptions
                     customStyles={{
-                        optionsWrapper:{
+                        optionsWrapper: {
                             padding: 4,
                         },
                         optionsContainer: {
-                            borderRadius: 12
+                            borderRadius: 12,
                         },
                     }}
                 >
-                    <MenuOption 
+                    <MenuOption
                         customStyles={{
                             optionWrapper: {
                                 flexDirection: 'row',
                                 paddingHorizontal: 12,
                                 paddingVertical: 8,
                                 alignItems: 'center',
-                                justifyContent: 'space-between'
-                            }
+                                justifyContent: 'space-between',
+                            },
                         }}
                     >
-                        <Text fontWeight='$medium'>Transact</Text>
+                        <Text fontWeight="$medium">Add transaction</Text>
                         <Icon as={Plus} />
                     </MenuOption>
-                    <MenuOption 
+                    <MenuOption
                         customStyles={{
                             optionWrapper: {
                                 flexDirection: 'row',
                                 paddingHorizontal: 12,
                                 paddingVertical: 8,
                                 alignItems: 'center',
-                                justifyContent: 'space-between'
-                            }
+                                justifyContent: 'space-between',
+                            },
                         }}
                     >
-                        <Text fontWeight='$medium'>Edit</Text>
+                        <Text fontWeight="$medium">Edit</Text>
                         <Icon as={PenSquare} />
                     </MenuOption>
-                    <MenuOption 
+                    <MenuOption
                         customStyles={{
                             optionWrapper: {
                                 flexDirection: 'row',
                                 paddingHorizontal: 12,
                                 paddingVertical: 8,
                                 alignItems: 'center',
-                                justifyContent: 'space-between'
-                            }
+                                justifyContent: 'space-between',
+                            },
                         }}
                     >
-                        <Text fontWeight='$medium' color='$rose600'>Remove</Text>
-                        <Icon color='$rose600' as={Trash} />
+                        <Text fontWeight="$medium" color="$rose600">
+                            Remove
+                        </Text>
+                        <Icon color="$rose600" as={Trash} />
                     </MenuOption>
                     {/* <MenuOption onSelect={() => alert(`Delete`)}>
                         <Text style={{ color: 'red' }}>Delete</Text>

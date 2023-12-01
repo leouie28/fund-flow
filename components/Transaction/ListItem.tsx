@@ -59,7 +59,11 @@ export default function ListItem({ data }: PropsType) {
                         }}
                     >
                         <View flex={5}>
-                            <Text fontWeight="$semibold" size="lg">
+                            <Text
+                                numberOfLines={1}
+                                fontWeight="$semibold"
+                                size="lg"
+                            >
                                 {data.fund_name}
                             </Text>
                             <Text size="sm">

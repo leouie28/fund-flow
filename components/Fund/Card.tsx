@@ -15,10 +15,19 @@ import {
     Progress,
     ProgressFilledTrack,
 } from '@gluestack-ui/themed';
-import { MoreHorizontal, TrendingDown, TrendingUp } from 'lucide-react-native';
+import {
+    MoreHorizontal,
+    TrendingDown,
+    TrendingUp,
+    Plus,
+    PlusCircle,
+    PenSquare,
+    FolderSync,
+    Trash,
+} from 'lucide-react-native';
 import Colors from '../../constants/Colors';
 import Line from '../Charts/Line';
-import MenuUi from '../Ui/Menu';
+import PopupMenu from './PopupMenu';
 import { formatNumber } from '../../utils/useNumber';
 import { router } from 'expo-router';
 
@@ -38,10 +47,46 @@ interface PropsType {
 
 export default function Card({ data }: PropsType) {
     const [isOpen, setIsOpen] = React.useState<boolean>(false);
+    const optionMenu: any[] = [
+        {
+            label: 'Add transaction',
+            value: 'add',
+            icon: PlusCircle,
+        },
+        {
+            label: 'Edit',
+            value: 'edit',
+            icon: PenSquare,
+        },
+        {
+            label: 'Sync Online',
+            value: 'sync',
+            icon: FolderSync,
+        },
+        {
+            label: 'Remove',
+            value: 'remove',
+            icon: Trash,
+        },
+    ];
 
     const getIncomePercent = () => {
         const total = data.income_amount_sum + data.expense_amount_sum;
         return (data.income_amount_sum / total) * 100;
+    };
+
+    const handleOptinSelect = (selected: string) => {
+        if (selected == 'add') {
+            router.push({
+                pathname: '/transaction/create',
+                params: { fund_id: data.id },
+            });
+        } else if (selected == 'edit') {
+            router.push({
+                pathname: '/fund/edit',
+                params: { fund_id: data.id },
+            });
+        }
     };
 
     return (
@@ -58,19 +103,14 @@ export default function Card({ data }: PropsType) {
                         {data.name}
                     </Heading>
                     <View>
-                        <MenuUi open={isOpen} close={() => setIsOpen(false)}>
+                        <PopupMenu
+                            items={optionMenu}
+                            open={isOpen}
+                            onChange={(e) => handleOptinSelect(e)}
+                            close={() => setIsOpen(false)}
+                        >
                             <MoreHorizontal color={Colors.slate['600']} />
-                            {/* <Pressable
-                                // onPress={() => setIsOpen(true)}
-                            >
-                                {({ pressed }) => (
-                                    <MoreHorizontal 
-                                        color={Colors.slate["600"]} 
-                                        style={{ opacity: pressed ? 0.5 : 1 }} 
-                                    />
-                                )}
-                            </Pressable> */}
-                        </MenuUi>
+                        </PopupMenu>
                     </View>
                 </View>
                 <View>
@@ -81,7 +121,7 @@ export default function Card({ data }: PropsType) {
                 <View marginTop={10}>
                     <Progress
                         marginVertical={4}
-                        bg={ getIncomePercent() >= 0 ? "#fb7185" : "#DADADA" }
+                        bg={getIncomePercent() >= 0 ? '#fb7185' : '#DADADA'}
                         value={getIncomePercent()}
                         w="$full"
                         size="sm"
@@ -119,7 +159,12 @@ export default function Card({ data }: PropsType) {
                 </View>
                 {/* <Divider marginTop="$4" /> */}
                 <Button
-                    onPress={() => router.push({pathname: "/transaction/create", params: {fund_id: data.id}})}
+                    onPress={() =>
+                        router.push({
+                            pathname: '/transaction/create',
+                            params: { fund_id: data.id },
+                        })
+                    }
                     rounded="$2xl"
                     marginTop={6}
                     variant="link"
