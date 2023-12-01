@@ -1,6 +1,6 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Link, Tabs } from 'expo-router';
-import { Pressable, StyleSheet, useColorScheme } from 'react-native';
+import { Pressable, StyleSheet, TouchableOpacity, useColorScheme } from 'react-native';
 import { router } from 'expo-router';
 
 import {
@@ -80,11 +80,13 @@ export default function TabLayout() {
                                 alignItems="center"
                                 marginLeft={15}
                             >
-                                <Avatar>
-                                    <AvatarFallbackText>
-                                        Mark Leouie
-                                    </AvatarFallbackText>
-                                </Avatar>
+                                <TouchableOpacity onPress={() => router.push("/account/profile")} activeOpacity={.5}>
+                                    <Avatar>
+                                        <AvatarFallbackText>
+                                            Mark Leouie
+                                        </AvatarFallbackText>
+                                    </Avatar>
+                                </TouchableOpacity>
                                 <Text
                                     marginLeft={10}
                                     size="xl"
@@ -95,7 +97,7 @@ export default function TabLayout() {
                             </Box>
                         ),
                         headerRight: () => (
-                            <Link href="/modal" asChild>
+                            <Link href="/setting" asChild>
                                 <Pressable>
                                     {({ pressed }) => (
                                         <AlignRight

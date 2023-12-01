@@ -114,7 +114,7 @@ export default function Card({ data }: PropsType) {
                     </View>
                 </View>
                 <View>
-                    <Text>Click to view more details</Text>
+                    <Text numberOfLines={1}>{data.description || 'Click to view more details'}</Text>
                 </View>
                 {/* <Line /> */}
                 {/* <Bar /> */}

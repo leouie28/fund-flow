@@ -92,6 +92,18 @@ function RootLayoutNav() {
                         options={{ headerShown: false, presentation: 'modal' }}
                     />
                     <Stack.Screen
+                        name="account/profile"
+                        options={{ headerTransparent: true, headerTitle: "Account Profile" }}
+                    />
+                    <Stack.Screen
+                        name="setting/index"
+                        options={{
+                            title: 'App Settings',
+                            headerTransparent: true,
+                            animation: 'slide_from_left',
+                        }}
+                    />
+                    <Stack.Screen
                         name="modal"
                         options={{
                             title: 'Fundflow',
