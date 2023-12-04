@@ -11,5 +11,5 @@ export default function Setting() {
                 </Center>
             </Box>
         </ContainerScreen>
-    )
+    );
 }

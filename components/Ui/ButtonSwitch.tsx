@@ -1,6 +1,17 @@
-import React from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import React, { useRef, useState } from 'react';
+import {
+    DimensionValue,
+    LayoutChangeEvent,
+    StyleSheet,
+    TouchableOpacity,
+    View,
+} from 'react-native';
 import { Text } from '@gluestack-ui/themed';
+import Animated, {
+    useAnimatedStyle,
+    withTiming,
+    useSharedValue,
+} from 'react-native-reanimated';
 
 type ItemType = {
     label: string;
@@ -16,7 +27,43 @@ type Props = {
 };
 
 export default function ({ value, onChange, label, items }: Props) {
-    const tabItem = '50%';
+    const viewRef = useRef<any>(null);
+    const [activeColor, setActiveColor] = useState<string>('');
+    const [sliderWidth, setSliderWidth] = useState<number>(0);
+    const positionX = useSharedValue<number>(0);
+
+    const tabWidthItem = (): number => {
+        const val = 100 / items.length;
+        return val;
+    };
+
+    const onViewLayout = (event: LayoutChangeEvent) => {
+        const { width } = event.nativeEvent.layout;
+        const slider = (width - 8) / items.length;
+        setSliderWidth(slider);
+    };
+
+    const handleToggle = (val: any, index: number) => {
+        if (onChange) onChange(val.value);
+        positionX.value = index * sliderWidth;
+    };
+
+    const translateAnim = useAnimatedStyle(() => {
+        return {
+            transform: [
+                {
+                    translateX: withTiming(positionX.value),
+                },
+            ],
+        };
+    });
+
+    React.useEffect(() => {
+        if (items.length) {
+            const color = items.find((x: ItemType) => x.value === value);
+            setActiveColor(color?.color || 'gray');
+        }
+    }, [value, items]);
 
     return (
         <View>
@@ -28,17 +75,23 @@ export default function ({ value, onChange, label, items }: Props) {
             >
                 {label}
             </Text>
-            <View style={styles.container}>
+            <View style={styles.container} onLayout={onViewLayout}>
+                <Animated.View
+                    style={[
+                        styles.sliderContainer,
+                        {
+                            width: sliderWidth,
+                            backgroundColor: activeColor,
+                        },
+                        translateAnim,
+                    ]}
+                />
                 {items.map((item, i) => (
                     <TouchableOpacity
                         key={i}
-                        onPress={() => onChange && onChange(item.value)}
+                        onPress={() => handleToggle(item, i)}
                         style={{
-                            width: tabItem,
-                            backgroundColor:
-                                value == item.value
-                                    ? item.color
-                                    : 'transparent',
+                            width: `${tabWidthItem()}%` as DimensionValue,
                             ...styles.item,
                         }}
                     >
@@ -58,6 +111,7 @@ export default function ({ value, onChange, label, items }: Props) {
 }
 const styles = StyleSheet.create({
     container: {
+        position: 'relative',
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
@@ -72,5 +126,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    sliderContainer: {
+        padding: 20,
+        margin: 4,
+        borderRadius: 15,
+        position: 'absolute',
+        top: 0,
+        left: -1,
     },
 });

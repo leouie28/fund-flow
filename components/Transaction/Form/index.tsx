@@ -55,6 +55,11 @@ export default function TransactionForm({ data, isLoading, submit }: Props) {
             value: 'expense',
             color: '#fb7185',
         },
+        {
+            label: 'Transfer',
+            value: 'transfer',
+            color: 'gray',
+        },
     ];
 
     React.useEffect(() => {
